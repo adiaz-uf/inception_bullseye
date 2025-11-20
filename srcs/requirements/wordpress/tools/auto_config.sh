@@ -24,7 +24,7 @@ else
 	wp user create $WORDPRESS_USER $WORDPRESS_EMAIL --role=author --user_pass=$WORDPRESS_USER_PASS --allow-root
 	
 	# Install and activate theme
-	wp theme install twentythree --activate --allow-root
+	wp theme install twentytwentythree --activate --allow-root
 	
 	echo "WordPress installation completed"
 fi

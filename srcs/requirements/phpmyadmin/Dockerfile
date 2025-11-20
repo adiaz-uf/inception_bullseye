@@ -1,0 +1,34 @@
+FROM debian:bullseye
+
+RUN apt-get update && apt-get install -y \
+    wget \
+    php \
+    php-fpm \
+    php-mysql \
+    php-mbstring \
+    php-zip \
+    php-gd \
+    php-json \
+    php-curl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /var/www
+
+# Download PHPMyAdmin
+RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.tar.gz && \
+    tar xzf phpMyAdmin-5.2.1-all-languages.tar.gz && \
+    mv phpMyAdmin-5.2.1-all-languages /var/www/phpmyadmin && \
+    rm phpMyAdmin-5.2.1-all-languages.tar.gz
+
+WORKDIR /var/www/phpmyadmin
+
+# PHP-FPM config
+RUN sed -i 's/listen = \/run\/php\/php7.4-fpm.sock/listen = 9000/g' /etc/php/7.4/fpm/pool.d/www.conf && \
+    mkdir -p /run/php
+
+COPY ./tools/start.sh /start.sh
+RUN chmod +x /start.sh
+
+EXPOSE 9000
+
+CMD ["/start.sh"]

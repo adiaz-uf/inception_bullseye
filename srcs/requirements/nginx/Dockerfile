@@ -7,8 +7,8 @@ COPY ./tools/launch_nginx.sh /var/www/
 
 RUN chmod +x /var/www/launch_nginx.sh
 
-EXPOSE 443
+EXPOSE 443 80
 
-ENTRYPOINT [ "var/www/launch_nginx.sh" ]
+ENTRYPOINT [ "/var/www/launch_nginx.sh" ]
 
 CMD ["nginx", "-g", "daemon off;"]
