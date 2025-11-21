@@ -16,6 +16,8 @@ services:
     networks:
         - network
     env_file: .env
+    environment:
+        - DOMAIN_NAME=${DOMAIN_NAME}
 
   mariadb:
     container_name: mariadb
@@ -23,7 +25,7 @@ services:
         context: ./requirements/mariadb/.
     image: mariadb
     volumes:
-        - mariadb:/var/lib/mysqlx
+        - mariadb:/var/lib/mysql
     networks:
         - network
     restart: always
@@ -56,6 +58,7 @@ services:
     networks:
       - network
     restart: always
+    env_file: .env
     environment:
       MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
     volumes:
@@ -68,18 +71,22 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/adiaz-uf/data/mysql
+      device: ${DATA_PATH}/mysql
       o: bind
 
   wordpress:
     driver: local
     driver_opts:
       type: none
-      device: /home/adiaz-uf/data/wordpress
+      device: ${DATA_PATH}/wordpress
       o: bind
 
   phpmyadmin:
     driver: local
+    driver_opts:
+      type: none
+      device: ${DATA_PATH}/phpmyadmin
+      o: bind
 
 networks:
   network:

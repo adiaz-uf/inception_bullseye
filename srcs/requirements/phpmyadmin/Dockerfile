@@ -12,13 +12,7 @@ RUN apt-get update && apt-get install -y \
     php-curl \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /var/www
-
-# Download PHPMyAdmin
-RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.tar.gz && \
-    tar xzf phpMyAdmin-5.2.1-all-languages.tar.gz && \
-    mv phpMyAdmin-5.2.1-all-languages /var/www/phpmyadmin && \
-    rm phpMyAdmin-5.2.1-all-languages.tar.gz
+RUN mkdir -p /var/www/phpmyadmin
 
 WORKDIR /var/www/phpmyadmin
 
